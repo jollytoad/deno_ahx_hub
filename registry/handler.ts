@@ -53,7 +53,10 @@ export default cascade(
     "/:regId",
     byMethod({
       GET: byMediaType({
-        "text/html": mapData(asRegistryProps, renderHTML(RegistryPage)),
+        "text/html": mapData(
+          asRegistryProps,
+          renderHTML(RegistryPage, undefined, { deferredTimeout: 100 }),
+        ),
       }),
       POST: handleSetAugmentation,
     }),

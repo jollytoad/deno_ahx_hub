@@ -3,7 +3,7 @@
 import { getItem, isWritable, listItems, removeItem, setItem } from "$store";
 import type { Augmentation } from "./types.ts";
 
-const HOST_AUG_ID = "0";
+// const HOST_AUG_ID = "0";
 
 const STORE = "augmentations";
 
@@ -16,9 +16,9 @@ export async function getAugmentation(
   augId: string,
 ): Promise<Augmentation | undefined> {
   const aug = getItem<Augmentation>([STORE, regId, augId]);
-  if (!aug && augId === HOST_AUG_ID) {
-    return hostAugmentationTemplate();
-  }
+  // if (!aug && augId === HOST_AUG_ID) {
+  //   return hostAugmentationTemplate();
+  // }
   return aug;
 }
 
@@ -96,9 +96,9 @@ export async function listAugmentations(
     augmentations.push(aug);
   }
 
-  if (!augmentations.some((a) => a.id === HOST_AUG_ID)) {
-    augmentations.unshift(hostAugmentationTemplate());
-  }
+  // if (!augmentations.some((a) => a.id === HOST_AUG_ID)) {
+  //   augmentations.unshift(hostAugmentationTemplate());
+  // }
   return augmentations;
 }
 
@@ -119,10 +119,10 @@ function isValidURL(url?: string): url is string {
   }
 }
 
-function hostAugmentationTemplate(): Augmentation {
-  return {
-    id: HOST_AUG_ID,
-    url: "",
-    enable: false,
-  };
-}
+// function hostAugmentationTemplate(): Augmentation {
+//   return {
+//     id: HOST_AUG_ID,
+//     url: "",
+//     enable: false,
+//   };
+// }

@@ -51,7 +51,7 @@ export function RegistryItem(props: AugmentationProps) {
           </button>
         </span>
       </span>
-      <AugmentationCheck {...props} placeholder />
+      <AugmentationCheck {...props} />
     </li>
   );
 }
