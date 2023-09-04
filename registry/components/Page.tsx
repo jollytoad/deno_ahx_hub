@@ -1,5 +1,7 @@
 import type { Children } from "$jsx/types.ts";
 import { Breadcrumbs } from "./Breadcrumbs.tsx";
+import { UserWidget } from "./UserWidget.tsx";
+import css from "./css.ts";
 
 interface Props {
   breadcrumbs?: Parameters<typeof Breadcrumbs>[0]["breadcrumbs"];
@@ -13,9 +15,9 @@ export function Page({ breadcrumbs = [], children }: Props) {
         <title>Registry - Ahh!</title>
         <link
           rel="stylesheet"
-          href="https://the.missing.style/v1.0.8/missing.min.css"
+          href="https://unpkg.com/missing.css@1.1.0/dist/missing.min.css"
         />
-        <link rel="stylesheet" href="/static/index.css" />
+        <style>{css}</style>
 
         <script
           src="https://unpkg.com/htmx.org@1.8.5"
@@ -28,6 +30,7 @@ export function Page({ breadcrumbs = [], children }: Props) {
         <main>
           <header>
             <h1>Augmented Hypermedia Registry</h1>
+            <UserWidget />
             <Breadcrumbs breadcrumbs={breadcrumbs ?? []} />
           </header>
 

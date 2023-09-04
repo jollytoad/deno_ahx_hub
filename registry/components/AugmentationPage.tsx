@@ -6,11 +6,11 @@ interface Props {
   regId: string;
   path: string;
   augmentation?: Augmentation;
-  readonly?: boolean;
+  editable?: boolean;
 }
 
 export function AugmentationPage(
-  { regId, path, augmentation, readonly }: Props,
+  { regId, path, augmentation, editable }: Props,
 ) {
   return (
     <Page
@@ -29,7 +29,7 @@ export function AugmentationPage(
         <AugmentationForm
           action={path}
           augmentation={augmentation}
-          readonly={readonly}
+          editable={editable}
         />
       </section>
     </Page>

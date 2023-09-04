@@ -4,11 +4,11 @@ import { proxiedUrl } from "../proxied_url.ts";
 interface Props extends Augmentation {
   regId: string;
   path: string;
-  readonly?: boolean;
+  editable?: boolean;
 }
 
-export function RegistryItem({ path, id, url, enable, readonly }: Props) {
-  const mode = readonly ? "View" : "Edit";
+export function RegistryItem({ path, id, url, enable, editable }: Props) {
+  const mode = editable ? "Edit" : "View";
   return (
     <li data-aug-id={id} class="item">
       <span class="enable" title={enable ? "Enabled" : "Disabled"}>
@@ -45,7 +45,7 @@ export function RegistryItem({ path, id, url, enable, readonly }: Props) {
             hx-confirm="Are you sure?"
             hx-target="closest .item"
             hx-swap="delete"
-            disabled={readonly}
+            disabled={!editable}
           >
             Delete
           </button>

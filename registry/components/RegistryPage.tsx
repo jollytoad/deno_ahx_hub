@@ -6,7 +6,7 @@ interface Props {
   regId: string;
   path: string;
   augmentations: Augmentation[];
-  readonly?: boolean;
+  editable?: boolean;
 }
 
 export function RegistryPage(props: Props) {
@@ -22,14 +22,9 @@ export function RegistryPage(props: Props) {
         <RegistryList {...props} />
 
         <p>
-          {props.readonly
-            ? (
-              <span>
-                This is a read-only registry, it will need to be redeployed to
-                update augmentations
-              </span>
-            )
-            : <a href={`${props.path}/-/add`}>Register a new augmentation</a>}
+          {props.editable
+            ? <a href={`${props.path}/-/add`}>Register a new augmentation</a>
+            : null}
         </p>
       </section>
 

@@ -3,11 +3,11 @@ import type { Augmentation } from "../types.ts";
 interface Props {
   action?: string;
   augmentation?: Augmentation;
-  readonly?: boolean;
+  editable?: boolean;
 }
 
 export function AugmentationForm(
-  { action = "", augmentation, readonly }: Props,
+  { action = "", augmentation, editable }: Props,
 ) {
   return (
     <form
@@ -25,7 +25,7 @@ export function AugmentationForm(
               name="newid"
               type="text"
               value={augmentation.id}
-              readOnly={readonly}
+              readOnly={!editable}
             />
             <input
               name="id"
@@ -42,7 +42,7 @@ export function AugmentationForm(
           name="url"
           type="url"
           value={augmentation?.url}
-          readOnly={readonly}
+          readOnly={!editable}
         />
       </p>
       <p>
@@ -53,14 +53,14 @@ export function AugmentationForm(
           type="checkbox"
           value="true"
           checked={augmentation?.enable ?? true}
-          disabled={readonly}
+          disabled={!editable}
         />
       </p>
       <p>
         <div class="tool-bar">
           <button
-            disabled={readonly}
-            title={readonly ? "Registry is read-only" : undefined}
+            disabled={!editable}
+            title={!editable ? "Sign in to edit" : undefined}
           >
             Save
           </button>

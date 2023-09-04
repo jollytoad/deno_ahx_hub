@@ -25,6 +25,7 @@ import { RegistryPage } from "./components/RegistryPage.tsx";
 import { AugmentationPage } from "./components/AugmentationPage.tsx";
 import { getProxiedRegistryUrl, getRegistryPath } from "./registry_url.ts";
 import { asCssImport } from "./css_import.ts";
+import { canEdit } from "./permission.ts";
 
 type RegistryProps = Parameters<typeof RegistryPage>[0];
 type AugmentationProps = Parameters<typeof AugmentationPage>[0];
@@ -142,9 +143,9 @@ async function asRegistryProps(
 
   const path = getRegistryPath(req, info);
   const augmentations = await listAugmentations(regId!);
-  const readonly = await isReadonly(regId);
+  const editable = await canEdit(req, regId);
 
-  return { regId, path, augmentations, readonly };
+  return { regId, path, augmentations, editable };
 }
 
 async function asAugmentationProps(
@@ -158,7 +159,7 @@ async function asAugmentationProps(
   }
 
   const path = getRegistryPath(req, info);
-  const readonly = await isReadonly(regId);
+  const editable = await canEdit(req, regId, augId);
 
   if (augId) {
     const augmentation = await getAugmentation(regId, augId);
@@ -167,9 +168,9 @@ async function asAugmentationProps(
       throw notFound();
     }
 
-    return { regId, path, augmentation, readonly };
+    return { regId, path, augmentation, editable };
   } else {
-    return { regId, path, readonly };
+    return { regId, path, editable };
   }
 }
 
