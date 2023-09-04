@@ -1,13 +1,13 @@
-import type { Augmentation } from "../types.ts";
+import type { AugmentationProps } from "../types.ts";
 import { proxiedUrl } from "../proxied_url.ts";
+import { AugmentationCheck } from "./AugmentationCheck.tsx";
 
-interface Props extends Augmentation {
-  regId: string;
-  path: string;
-  editable?: boolean;
-}
-
-export function RegistryItem({ path, id, url, enable, editable }: Props) {
+export function RegistryItem(props: AugmentationProps) {
+  const { path, editable, augmentation } = props;
+  if (!augmentation) {
+    return null;
+  }
+  const { id, url, enable } = augmentation;
   const mode = editable ? "Edit" : "View";
   return (
     <li data-aug-id={id} class="item">
@@ -51,6 +51,7 @@ export function RegistryItem({ path, id, url, enable, editable }: Props) {
           </button>
         </span>
       </span>
+      <AugmentationCheck {...props} placeholder />
     </li>
   );
 }

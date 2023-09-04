@@ -13,7 +13,7 @@ import { forbidden } from "$http_fns/response/forbidden.ts";
 import { seeOther } from "$http_fns/response/see_other.ts";
 import { notFound } from "$http_fns/response/not_found.ts";
 import { ok } from "$http_fns/response/ok.ts";
-import type { Augmentation } from "./types.ts";
+import type { Augmentation, AugmentationProps } from "./types.ts";
 import {
   deleteAugmentation,
   getAugmentation,
@@ -26,9 +26,9 @@ import { AugmentationPage } from "./components/AugmentationPage.tsx";
 import { getProxiedRegistryUrl, getRegistryPath } from "./registry_url.ts";
 import { asCssImport } from "./css_import.ts";
 import { canEdit } from "./permission.ts";
+import { AugmentationCheck } from "./components/AugmentationCheck.tsx";
 
 type RegistryProps = Parameters<typeof RegistryPage>[0];
-type AugmentationProps = Parameters<typeof AugmentationPage>[0];
 
 const fsRoot = fromFileUrl(import.meta.resolve("./static"));
 
@@ -74,6 +74,17 @@ export default cascade(
         "application/json": mapData(asAugmentationProps, renderJSON()),
       }),
       DELETE: handleDeleteAugmentation,
+    }),
+  ),
+  byPattern(
+    "/:regId/-/aug/:augId/check",
+    byMethod({
+      GET: byMediaType({
+        "text/html": mapData(
+          asAugmentationProps,
+          renderHTML(AugmentationCheck),
+        ),
+      }),
     }),
   ),
 );
@@ -134,7 +145,7 @@ async function handleDeleteAugmentation(req: Request, info: URLPatternResult) {
 async function asRegistryProps(
   req: Request,
   info: URLPatternResult,
-): Promise<RegistryProps> {
+): Promise<RegistryProps & { req: Request }> {
   const { regId } = info.pathname.groups;
 
   if (!regId) {
@@ -145,13 +156,13 @@ async function asRegistryProps(
   const augmentations = await listAugmentations(regId!);
   const editable = await canEdit(req, regId);
 
-  return { regId, path, augmentations, editable };
+  return { req, regId, path, augmentations, editable };
 }
 
 async function asAugmentationProps(
   req: Request,
   info: URLPatternResult,
-): Promise<AugmentationProps> {
+): Promise<AugmentationProps & { req: Request }> {
   const { regId, augId } = info.pathname.groups;
 
   if (!regId) {
@@ -168,9 +179,9 @@ async function asAugmentationProps(
       throw notFound();
     }
 
-    return { regId, path, augmentation, editable };
+    return { req, regId, path, augmentation, editable };
   } else {
-    return { regId, path, editable };
+    return { req, regId, path, editable };
   }
 }
 

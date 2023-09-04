@@ -1,16 +1,9 @@
 import { Page } from "./Page.tsx";
 import { AugmentationForm } from "./AugmentationForm.tsx";
-import type { Augmentation } from "../types.ts";
-
-interface Props {
-  regId: string;
-  path: string;
-  augmentation?: Augmentation;
-  editable?: boolean;
-}
+import type { AugmentationProps } from "../types.ts";
 
 export function AugmentationPage(
-  { regId, path, augmentation, editable }: Props,
+  { regId, path, augmentation, editable }: AugmentationProps,
 ) {
   return (
     <Page

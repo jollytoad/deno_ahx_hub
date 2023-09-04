@@ -11,7 +11,7 @@ export function RegistryList(props: Props) {
   return (
     <ul id="registry" class="table rows">
       {props.augmentations.map((augmentation) => (
-        <RegistryItem {...props} {...augmentation} />
+        <RegistryItem {...props} augmentation={augmentation} />
       ))}
     </ul>
   );

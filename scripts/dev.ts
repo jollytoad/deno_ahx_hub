@@ -5,4 +5,6 @@ import { cors } from "$http_fns/cors.ts";
 
 await load({ export: true });
 
+Deno.env.set("DENO_TLS_CA_STORE", "system");
+
 await Deno.serve(await init(handler, { response: [cors()] })).finished;

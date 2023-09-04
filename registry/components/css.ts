@@ -10,4 +10,8 @@ export default `
 .signin-menu a {
   margin-left: 0.5em;
 }
+
+.aug-check {
+  font-size: smaller;
+}
 `;

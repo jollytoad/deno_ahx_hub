@@ -17,7 +17,7 @@ export function Page({ breadcrumbs = [], children }: Props) {
           rel="stylesheet"
           href="https://unpkg.com/missing.css@1.1.0/dist/missing.min.css"
         />
-        <style>{css}</style>
+        <style dangerouslySetInnerHTML={{ __html: css }}></style>
 
         <script
           src="https://unpkg.com/htmx.org@1.8.5"

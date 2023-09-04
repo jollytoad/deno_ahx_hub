@@ -1,15 +1,8 @@
-import type { Augmentation } from "../types.ts";
+import type { RegistryProps } from "../types.ts";
 import { Page } from "./Page.tsx";
 import { RegistryList } from "./RegistryList.tsx";
 
-interface Props {
-  regId: string;
-  path: string;
-  augmentations: Augmentation[];
-  editable?: boolean;
-}
-
-export function RegistryPage(props: Props) {
+export function RegistryPage(props: RegistryProps) {
   return (
     <Page
       breadcrumbs={[
