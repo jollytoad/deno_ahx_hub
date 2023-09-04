@@ -21,6 +21,7 @@ import { ok } from "$http_fns/response/ok.ts";
 import { notFound } from "$http_fns/response/not_found.ts";
 import { replaceBody } from "$http_fns/response/replace_body.ts";
 import { appendHeaders } from "$http_fns/response/append_headers.ts";
+import { badGateway } from "$http_fns/response/bad_gateway.ts";
 
 export default byPattern(
   ["/:regId/:augId", "/:regId/:augId/*"],
@@ -72,12 +73,20 @@ export default byPattern(
 
       const { method, body } = req;
 
-      let response = await fetch(url, {
-        method,
-        headers,
-        body,
-        redirect: "manual",
-      });
+      let response!: Response;
+
+      try {
+        response = await fetch(url, {
+          method,
+          headers,
+          body,
+          redirect: "manual",
+        });
+      } catch (e: unknown) {
+        console.error(`Proxy request failed: ${req.url}`);
+        const message = e instanceof Error ? e.message : "proxy request failed";
+        return badGateway(message);
+      }
 
       if (response.status === 101) {
         console.log("WEBSOCKET!");
