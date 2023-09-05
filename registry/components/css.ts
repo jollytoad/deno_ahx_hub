@@ -11,7 +11,7 @@ export default `
   margin-left: 0.5em;
 }
 
-.aug-check {
+.check {
   font-size: smaller;
 }
 `;

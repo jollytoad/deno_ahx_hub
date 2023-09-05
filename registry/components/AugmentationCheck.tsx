@@ -1,5 +1,7 @@
 import { proxiedUrl } from "../proxied_url.ts";
 import type { AugmentationProps } from "../types.ts";
+import proxyHandler from "../../proxy/handler.ts";
+import { withFallback } from "$http_fns/fallback.ts";
 
 export async function AugmentationCheck(
   props: AugmentationProps & { req?: Request; placeholder?: boolean },
@@ -16,7 +18,7 @@ export async function AugmentationCheck(
     return (
       <span
         id={docId}
-        class="aug-check"
+        class="check"
         hx-get={`/${regId}/-/aug/${id}/check`}
         hx-trigger="load"
         hx-swap="outerHTML"
@@ -27,23 +29,30 @@ export async function AugmentationCheck(
     let status = "?";
     let className = "";
     try {
-      const response = await fetch(
-        new URL(proxiedUrl(path, id, url), req?.url),
-        {
-          headers: {
-            "Accept": "text/css",
-          },
-        },
-      );
+      const reqUrl = new URL(proxiedUrl(path, id, url), req?.url);
+      const response = await proxyRequest(reqUrl);
       status = response.statusText;
       className = response.ok ? "ok" : "bad";
+      response.body?.cancel();
     } catch (e) {
-      status = "Error";
       className = "bad";
-      console.log(e);
+      status = "Error";
+
+      if (e instanceof Error) {
+        if (e.message.includes("Invalid URL")) {
+          status = "Invalid URL";
+        }
+      }
     }
-    return (
-      <span id={docId} class={`aug-check chip ${className}`}>{status}</span>
-    );
+    return <span id={docId} class={`check chip ${className}`}>{status}</span>;
   }
+}
+
+function proxyRequest(url: string | URL) {
+  const req = new Request(url, {
+    headers: {
+      "Accept": "text/css",
+    },
+  });
+  return withFallback(proxyHandler)(req);
 }

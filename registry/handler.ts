@@ -55,7 +55,7 @@ export default cascade(
       GET: byMediaType({
         "text/html": mapData(
           asRegistryProps,
-          renderHTML(RegistryPage, undefined, { deferredTimeout: 100 }),
+          renderHTML(RegistryPage, undefined, { deferredTimeout: 10 }),
         ),
       }),
       POST: handleSetAugmentation,
