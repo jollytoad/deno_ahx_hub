@@ -17,7 +17,6 @@ import type { Augmentation, AugmentationProps } from "./types.ts";
 import {
   deleteAugmentation,
   getAugmentation,
-  isReadonly,
   listAugmentations,
   setAugmentation,
 } from "./store.ts";
@@ -106,11 +105,7 @@ async function handleSetAugmentation(req: Request, info: URLPatternResult) {
     return badRequest();
   }
 
-  const readonly = await isReadonly(regId);
-
-  if (readonly) {
-    return forbidden();
-  } else {
+  if (await canEdit(req, regId)) {
     const data = await getBodyAsObject<Partial<Augmentation>>(
       req,
       processForm,
@@ -121,6 +116,8 @@ async function handleSetAugmentation(req: Request, info: URLPatternResult) {
     const location = getProxiedRegistryUrl(req)?.href ?? req.url;
 
     return seeOther(location);
+  } else {
+    return forbidden();
   }
 }
 
@@ -131,17 +128,15 @@ async function handleDeleteAugmentation(req: Request, info: URLPatternResult) {
     return badRequest();
   }
 
-  const readonly = await isReadonly(regId);
-
-  if (readonly) {
-    return forbidden();
-  } else {
+  if (await canEdit(req, regId)) {
     await deleteAugmentation(regId, augId);
 
     const location = getProxiedRegistryUrl(req)?.href ??
       new URL(`/${regId}`, req.url).href;
 
     return seeOther(location);
+  } else {
+    return forbidden();
   }
 }
 
@@ -173,7 +168,7 @@ async function asAugmentationProps(
   }
 
   const path = getRegistryPath(req, info);
-  const editable = await canEdit(req, regId, augId);
+  const editable = await canEdit(req, regId);
 
   if (augId) {
     const augmentation = await getAugmentation(regId, augId);
