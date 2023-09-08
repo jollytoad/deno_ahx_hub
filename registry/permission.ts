@@ -10,5 +10,23 @@ export async function canEdit(req: Request, regId: string) {
   const sessionId = getSessionId(req);
   const claims = sessionId && await getClaims<IdClaims>(sessionId);
 
-  return !!claims;
+  if (claims) {
+    return true;
+  }
+
+  try {
+    const registrarToken = Deno.env.get("REGISTRAR_TOKEN");
+
+    if (registrarToken) {
+      const auth = req.headers.get("Authorization");
+
+      if (auth === `Bearer ${registrarToken}`) {
+        return true;
+      }
+    }
+  } catch {
+    // Env permission error
+  }
+
+  return false;
 }
