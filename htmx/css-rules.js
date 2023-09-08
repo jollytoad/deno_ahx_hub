@@ -7,6 +7,7 @@
     customProps: [
       "--name",
       "--value",
+      "--class",
       // "--ws-connect",
       // "--ws-send",
       // "--sse-connect",
