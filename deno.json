@@ -38,6 +38,7 @@
     "hast-util-to-html": "https://esm.sh/hast-util-to-html@8.0.4",
     "htmx/": "https://ghuc.cc/bigskysoftware/htmx@1.9.5/src/",
     "https://deno.land/x/esbuild@v0.17.19/": "https://deno.land/x/esbuild@v0.18.17/",
-    "https://deno.land/x/oauth2_client@v1.0.2/mod.ts": "https://cdn.jsdelivr.net/gh/jollytoad/deno-oauth2-client@oidc-2/mod.ts"
+    "https://deno.land/x/oauth2_client@v1.0.2/mod.ts": "https://cdn.jsdelivr.net/gh/jollytoad/deno-oauth2-client@oidc-2/mod.ts",
+    "ahx/": "../ahx_lib/"
   }
 }

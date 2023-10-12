@@ -7,6 +7,14 @@ export async function canEdit(req: Request, regId: string) {
     return false;
   }
 
+  try {
+    if (Deno.env.get("ANON_EDIT") === "true") {
+      return true;
+    }
+  } catch {
+    // Env permission error
+  }
+
   const sessionId = getSessionId(req);
   const claims = sessionId && await getClaims<IdClaims>(sessionId);
 

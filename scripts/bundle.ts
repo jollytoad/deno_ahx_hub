@@ -1,6 +1,7 @@
 import * as esbuild from "https://deno.land/x/esbuild@v0.18.17/mod.js";
 import { denoPlugins } from "https://deno.land/x/esbuild_deno_loader@0.8.1/mod.ts";
 import { fromFileUrl } from "$std/path/mod.ts";
+import { parse } from "$std/flags/mod.ts";
 
 export async function bundle(opts?: { watch?: boolean }) {
   console.log("Bundling static hx scripts");
@@ -10,7 +11,7 @@ export async function bundle(opts?: { watch?: boolean }) {
   const ctxs = [
     await esbuild.context({
       plugins: [...denoPlugins({ configPath })],
-      entryPoints: ["htmx/index.js"],
+      entryPoints: ["ahx/index.ts"],
       bundle: true,
       minify: true,
       sourcemap: true,
@@ -33,5 +34,6 @@ export async function bundle(opts?: { watch?: boolean }) {
 }
 
 if (import.meta.main) {
-  bundle();
+  const { watch } = parse(Deno.args);
+  bundle({ watch });
 }

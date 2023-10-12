@@ -29,6 +29,8 @@ const MISSING_TAGS = {
   "address": [],
   "menu": [],
   "section": [],
+  "slot": ["name"],
+  "template": [],
   "tfoot": [],
 };
 const MEDIA_TAGS = {
@@ -130,11 +132,11 @@ async function clean(raw: string, prefix: string): Promise<string> {
     GLOBAL_ATTRS.forEach((attr) => builder.genericAttributes.add(attr));
 
     builder.genericAttributePrefixes = new Set([
-      "hx-",
-      "data-",
+      "ahx-",
+      // "data-",
       "aria-",
-      "sse-",
-      "ws-",
+      // "sse-",
+      // "ws-",
     ]);
 
     builder.urlSchemes = new Set(["http", "https"]);
