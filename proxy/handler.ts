@@ -104,7 +104,7 @@ export default byPattern(
         return response.body ? replaceBody(response, null) : response;
       }
 
-      response = await substituteResponse(response, {
+      response = substituteResponse(response, {
         // NOTE: The commented out vars are currently unused in practice but may be
         // added if required.
         ID: `${AUGMENTATION_PREFIX}${augId}`,

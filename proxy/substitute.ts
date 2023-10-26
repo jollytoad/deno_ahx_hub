@@ -1,11 +1,12 @@
 import { parseMediaType } from "$std/media_types/parse_media_type.ts";
 import { replaceBody } from "$http_fns/response/replace_body.ts";
 import { badGateway } from "$http_fns/response/bad_gateway.ts";
+import { SubstitutionStream } from "../lib/SubstitutionStream.ts";
 
-export async function substituteResponse(
+export function substituteResponse(
   res: Response,
   vars: Record<string, string>,
-): Promise<Response> {
+): Response {
   if (res.body === null) {
     return res;
   }
@@ -21,20 +22,18 @@ export async function substituteResponse(
   switch (mediaType) {
     case "text/html":
     case "text/css": {
-      const rawContent = await res.text();
-      const subContent = substitute(rawContent, vars);
+      const subContent = res.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new SubstitutionStream({ substitute }))
+        .pipeThrough(new TextEncoderStream());
+
       return replaceBody(res, subContent);
     }
     default:
       return res;
   }
-}
 
-function substitute(content: string, vars: Record<string, string>): string {
-  return content.replaceAll(
-    /(?<delim>[%_])([A-Z_]+)\k<delim>/g,
-    (match, _, key) => {
-      return vars[key] ?? match;
-    },
-  );
+  function substitute(key: string) {
+    return vars[key];
+  }
 }

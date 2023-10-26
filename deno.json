@@ -17,6 +17,7 @@
     "verbatimModuleSyntax": true
   },
   "exclude": [
+    "ahx/index.ts",
     "htmx/htmx.js",
     "registry/static/index.js"
   ],

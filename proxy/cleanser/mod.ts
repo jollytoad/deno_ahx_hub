@@ -1,6 +1,6 @@
 import { parseMediaType } from "$std/media_types/parse_media_type.ts";
 import { badGateway } from "$http_fns/response/bad_gateway.ts";
-import html from "./html.ts";
+import html from "./html_rewriter.ts";
 import css from "./css.ts";
 
 export type Cleanser = (
