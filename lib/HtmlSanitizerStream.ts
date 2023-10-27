@@ -36,7 +36,6 @@ export class HtmlSanitizerStream
       },
 
       transform(chunk) {
-        console.log(chunk);
         rewriter?.write(chunk);
       },
 
