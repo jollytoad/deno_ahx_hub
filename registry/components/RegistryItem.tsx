@@ -1,6 +1,7 @@
 import type { AugmentationProps } from "../types.ts";
 import { proxiedUrl } from "../proxied_url.ts";
 import { AugmentationCheck } from "./AugmentationCheck.tsx";
+import { AugmentationEnabled } from "./AugmentationEnabled.tsx";
 
 export function RegistryItem(props: AugmentationProps) {
   const { path, editable, augmentation } = props;
@@ -12,7 +13,7 @@ export function RegistryItem(props: AugmentationProps) {
   return (
     <li data-aug-id={id} class="item">
       <span class="enable" title={enable ? "Enabled" : "Disabled"}>
-        {enable ? "☑︎" : "☐"}
+        <AugmentationEnabled {...props} />
       </span>
       <span class="id" title="Id">{id}</span>
       <span class="url">

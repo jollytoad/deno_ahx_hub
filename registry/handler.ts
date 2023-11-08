@@ -26,6 +26,7 @@ import { getProxiedRegistryUrl, getRegistryPath } from "./registry_url.ts";
 import { asCssImport } from "./css_import.ts";
 import { canEdit } from "./permission.ts";
 import { AugmentationCheck } from "./components/AugmentationCheck.tsx";
+import { AugmentationEnabled } from "./components/AugmentationEnabled.tsx";
 
 type RegistryProps = Parameters<typeof RegistryPage>[0];
 
@@ -89,6 +90,17 @@ export default cascade(
       }),
     }),
   ),
+  byPattern(
+    "/:regId/-/aug/:augId/:action(enable|disable)",
+    byMethod({
+      POST: byMediaType({
+        "text/html": mapData(
+          handleToggleAugmentation,
+          renderHTML(AugmentationEnabled),
+        ),
+      }),
+    }),
+  ),
 );
 
 function handleGetScript(req: Request, info: URLPatternResult) {
@@ -137,6 +149,31 @@ async function handleDeleteAugmentation(req: Request, info: URLPatternResult) {
     return seeOther(location);
   } else {
     return forbidden();
+  }
+}
+
+async function handleToggleAugmentation(
+  req: Request,
+  info: URLPatternResult,
+): Promise<AugmentationProps> {
+  const { regId, augId, action } = info.pathname.groups;
+
+  if (
+    !regId || !augId || !action ||
+    !(action === "enable" || action === "disable")
+  ) {
+    throw badRequest();
+  }
+
+  if (await canEdit(req, regId)) {
+    await setAugmentation(regId, {
+      id: augId,
+      enable: action === "enable",
+    });
+
+    return asAugmentationProps(req, info);
+  } else {
+    throw forbidden();
   }
 }
 
