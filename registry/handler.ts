@@ -1,12 +1,12 @@
 import { renderHTML } from "$http_render_fns/render_html.tsx";
 import { renderJSON } from "$http_render_fns/render_json.ts";
 import { getBodyAsObject } from "$http_fns/request/body_as_object.ts";
-import { byPattern } from "$http_fns/pattern.ts";
-import { byMethod } from "$http_fns/method.ts";
-import { byMediaType } from "$http_fns/media_type.ts";
+import { byPattern } from "$http_fns/by_pattern.ts";
+import { byMethod } from "$http_fns/by_method.ts";
+import { byMediaType } from "$http_fns/by_media_type.ts";
 import { serveDir } from "$std/http/file_server.ts";
 import { fromFileUrl } from "$std/path/mod.ts";
-import { mapData } from "$http_fns/map.ts";
+import { mapData } from "$http_fns/map_data.ts";
 import { cascade } from "$http_fns/cascade.ts";
 import { badRequest } from "$http_fns/response/bad_request.ts";
 import { forbidden } from "$http_fns/response/forbidden.ts";

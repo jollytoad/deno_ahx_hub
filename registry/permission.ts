@@ -15,7 +15,7 @@ export async function canEdit(req: Request, regId: string) {
     // Env permission error
   }
 
-  const sessionId = getSessionId(req);
+  const sessionId = await getSessionId(req);
   const claims = sessionId && await getClaims<IdClaims>(sessionId);
 
   if (claims) {

@@ -1,4 +1,4 @@
-import { byPattern } from "$http_fns/pattern.ts";
+import { byPattern } from "$http_fns/by_pattern.ts";
 import { getAugmentation } from "../registry/store.ts";
 import { cleanseResponse } from "./cleanser/mod.ts";
 import { substituteResponse } from "./substitute.ts";
@@ -14,8 +14,8 @@ import { getUrlHeader } from "$http_fns/request/url_header.ts";
 import {
   isInformationalStatus,
   isRedirectStatus,
-  Status,
-} from "$std/http/http_status.ts";
+  STATUS_CODE,
+} from "$std/http/status.ts";
 import { getCookieToken } from "$ahx_fns/authn/client/cookie.ts";
 import { ok } from "$http_fns/response/ok.ts";
 import { notFound } from "$http_fns/response/not_found.ts";
@@ -166,7 +166,8 @@ export function getAugUrls(
 }
 
 function isNoContentStatus(
-  status: Status,
-): status is Status.NoContent | Status.ResetContent {
-  return status === Status.NoContent || status === Status.ResetContent;
+  status: number,
+): status is typeof STATUS_CODE.NoContent | typeof STATUS_CODE.ResetContent {
+  return status === STATUS_CODE.NoContent ||
+    status === STATUS_CODE.ResetContent;
 }

@@ -1,7 +1,6 @@
 {
   "tasks": {
     "bundle": "deno run -A scripts/bundle.ts",
-    "gen": "deno run --allow-net --allow-read --allow-write scripts/gen.ts",
     "start": "deno run --unstable --allow-net --allow-read --allow-write=./.store --allow-env --watch scripts/dev.ts",
     "start:prod": "deno run --unstable --allow-net --allow-read --allow-env main.ts",
     "mkcert": "mkcert -install -key-file localhost-key.pem -cert-file localhost-cert.pem localhost",
@@ -22,24 +21,27 @@
     "registry/static/index.js"
   ],
   "imports": {
-    "$std/": "https://deno.land/std@0.200.0/",
-    "https://deno.land/std@0.197.0/": "https://deno.land/std@0.200.0/",
-    "https://deno.land/std@0.192.0/": "https://deno.land/std@0.200.0/",
-    "https://deno.land/std@0.161.0/encoding/base64.ts": "https://deno.land/std@0.200.0/encoding/base64.ts",
-    "$http_fns/": "https://deno.land/x/http_fns@v0.0.27/",
-    "$http_render_fns/": "https://deno.land/x/http_render_fns@v0.0.6/",
-    "$ahx_fns/": "https://deno.land/x/ahx_fns@v0.0.12/",
-    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.12/",
-    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.12/jsx-runtime.ts",
-    "$store": "https://deno.land/x/storage_modules@v0.0.7/deno_kv.ts",
-    "$deno_kv_oauth/": "https://deno.land/x/deno_kv_oauth@v0.6.1/src/",
+    "$std/": "https://deno.land/std@0.208.0/",
+    "https://deno.land/std@0.140.0/": "https://deno.land/std@0.208.0/",
+    "https://deno.land/std@0.140.0/streams/conversion.ts": "https://deno.land/std@0.208.0/streams/mod.ts",
+    "https://deno.land/std@0.201.0/": "https://deno.land/std@0.208.0/",
+    "https://deno.land/std@0.204.0/": "https://deno.land/std@0.208.0/",
+    "https://deno.land/std@0.161.0/encoding/base64.ts": "https://deno.land/std@0.208.0/encoding/base64.ts",
+    "$http_fns/": "https://deno.land/x/http_fns@v0.1.0/lib/",
+    "$http_render_fns/": "https://deno.land/x/http_render_fns@v0.1.0/lib/",
+    "$jsx/": "https://deno.land/x/jsx_stream@v0.0.13/",
+    "$jsx/jsx-runtime": "https://deno.land/x/jsx_stream@v0.0.13/jsx-runtime.ts",
+    "$ahx_fns/": "https://deno.land/x/ahx_fns@v0.1.0/lib/",
+    "$store": "https://deno.land/x/storage_modules@v0.1.0/deno_kv.ts",
+    "$deno_kv_oauth/": "https://deno.land/x/deno_kv_oauth@v0.10.0/lib/",
     "$ammonia/": "https://deno.land/x/ammonia@0.3.1/",
-    "hastscript": "https://esm.sh/hastscript@7.2.0",
-    "hastscript/": "https://esm.sh/hastscript@7.2.0/",
-    "hast-util-to-html": "https://esm.sh/hast-util-to-html@8.0.4",
+    "hastscript": "https://esm.sh/hastscript@8.0.0",
+    "hastscript/": "https://esm.sh/hastscript@8.0.0/",
+    "hast-util-to-html": "https://esm.sh/hast-util-to-html@9.0.0",
     "htmx/": "https://ghuc.cc/bigskysoftware/htmx@1.9.5/src/",
-    "https://deno.land/x/esbuild@v0.17.19/": "https://deno.land/x/esbuild@v0.18.17/",
+    "https://deno.land/x/esbuild@v0.19.2/": "https://deno.land/x/esbuild@v0.19.7/",
+    "https://deno.land/x/deno_cache@0.4.1/": "https://deno.land/x/deno_cache@0.6.2/",
     "https://deno.land/x/oauth2_client@v1.0.2/mod.ts": "https://cdn.jsdelivr.net/gh/jollytoad/deno-oauth2-client@oidc-2/mod.ts",
-    "ahx/": "../ahx_lib/"
+    "ahx/": "https://ghuc.cc/jollytoad/ahx@v0.1.0/"
   }
 }

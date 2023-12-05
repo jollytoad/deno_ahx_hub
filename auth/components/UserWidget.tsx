@@ -1,9 +1,6 @@
 import { getSessionId } from "$deno_kv_oauth/get_session_id.ts";
 import { getClaims, type IdClaims } from "../claims.ts";
-import {
-  getOAuth2ClientNames,
-  hasOAuth2ClientEnvVars,
-} from "../oauth2_clients.ts";
+import { getOAuthClientNames, hasOAuthClientEnvVars } from "../oauth_config.ts";
 
 interface Props {
   req?: Request;
@@ -14,7 +11,7 @@ export async function UserWidget({ req }: Props) {
     return null;
   }
 
-  const sessionId = getSessionId(req);
+  const sessionId = await getSessionId(req);
 
   if (sessionId) {
     const claims = await getClaims(sessionId) ?? undefined;
@@ -74,8 +71,8 @@ interface Provider {
 
 async function getProviders(): Promise<Provider[]> {
   return (await Promise.all(
-    getOAuth2ClientNames().map(async (name) => {
-      if (await hasOAuth2ClientEnvVars(name)) {
+    getOAuthClientNames().map(async (name) => {
+      if (await hasOAuthClientEnvVars(name)) {
         return {
           id: name.toLowerCase(),
           name,

@@ -1,5 +1,7 @@
 # Augmented Hypermedia Architecture
 
+_TODO: update for ahx lib_
+
 ## Overview of Services
 
 The augmented hypermedia _system_ consists of three types of service:

@@ -1,7 +1,7 @@
 import { proxiedUrl } from "../proxied_url.ts";
 import type { AugmentationProps } from "../types.ts";
 import proxyHandler from "../../proxy/handler.ts";
-import { withFallback } from "$http_fns/fallback.ts";
+import { withFallback } from "$http_fns/with_fallback.ts";
 
 export async function AugmentationCheck(
   props: AugmentationProps & { req?: Request; placeholder?: boolean },
