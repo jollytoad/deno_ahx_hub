@@ -16,25 +16,25 @@ export function AugmentationForm(
       action={action}
       method="post"
     >
-      {augmentation?.id
-        ? (
-          <p>
-            <label for="id">Id</label>
-            <input
-              id="id"
-              name="newid"
-              type="text"
-              value={augmentation.id}
-              readOnly={!editable}
-            />
+      <p>
+        <label for="id">Id</label>
+        <input
+          id="id"
+          name="newid"
+          type="text"
+          value={augmentation?.id}
+          readOnly={!editable}
+        />
+        {augmentation?.id
+          ? (
             <input
               name="id"
               type="hidden"
               value={augmentation.id}
             />
-          </p>
-        )
-        : null}
+          )
+          : <span>(optional)</span>}
+      </p>
       <p>
         <label for="url">URL</label>
         <input
