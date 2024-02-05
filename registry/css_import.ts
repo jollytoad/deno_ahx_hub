@@ -2,9 +2,9 @@ import type { Augmentation } from "./types.ts";
 import { proxiedUrl } from "./proxied_url.ts";
 
 /**
- * Generate a `@import' or `--css-rule-import-*` for an augmentation.
+ * Generate a `@import' or `--ahx-import` for an augmentation.
  *
- * @param asRuleProp as `@import` does support cross-origin, this allows use of `--css-rule-import` instead.
+ * @param asRuleProp as `@import` does not support cross-origin, this allows use of `--ahx-import` instead.
  */
 export const asCssImport =
   (path: string, asRuleProp = false) =>
@@ -13,7 +13,7 @@ export const asCssImport =
       try {
         const urlFn = `url("${encodeURI(proxiedUrl(path, id, url))}")`;
         return asRuleProp
-          ? `  --css-rule-import-ahx-${id}: ${urlFn};\n`
+          ? `  --ahx-import: ${urlFn};\n`
           : `@import ${urlFn};\n`;
       } catch (e) {
         console.error(e);
